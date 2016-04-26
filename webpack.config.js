@@ -2,12 +2,13 @@ var path = require('path');
 var webpack = require('webpack');
 module.exports = {
   entry: {
-    'uc': './index.js'
+    'uc': ['webpack-dev-server/client?http://localhost:7777', 'webpack/hot/dev-server', './index.js']
   },
   output: {
     // path: path.resolve(__dirname, 'build'),
     filename: 'uc.js'
   },
+  devtool: 'cheap-source-map',
   // 本地服务器配置 
   devServer: {
     hot: true,
@@ -25,7 +26,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader?modules'
+        loader: 'style-loader!css-loader'
       },
     ]
   },

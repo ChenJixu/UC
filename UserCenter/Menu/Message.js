@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default React.createClass({
+var Message = React.createClass({
   render: function () {
     return (
       <div>
@@ -9,3 +9,4 @@ export default React.createClass({
     );
   }
 });
+export default Message;

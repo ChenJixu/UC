@@ -1,0 +1,72 @@
+.Main {
+  border: 1px solid #ccc;
+}
+.MainTitle {
+  margin: 0;
+  text-align: center;
+  height: 100px;
+  line-height: 110px;
+  font-size: 40px;
+  color: #fff;
+  background-color: #4b4949;
+}
+.MainContent {
+  display: flex;
+  margin-top: 20px;
+  border-top: 2px solid #ccc;
+}
+.MainMenu {
+  min-height: 700px;
+}
+.MainList {
+  width: 100%;
+  padding: 30px 0;
+}
+.MainLink {
+  color: #333;
+}
+.list {
+  padding: 15px;
+}
+.listheader {
+  margin-bottom: 20px;
+}
+.listheader_item {
+  display: inline-block;
+  width: 200px;
+  text-align: center;
+}
+.Header {
+  margin: 0;
+  padding-left: 30px;
+  border-bottom: 1px solid #ccc;
+}
+.FitArticle {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+.HeaderItem {
+  display: inline-block;
+  padding: 15px 20px;
+  cursor: pointer;
+}
+.HeaderItem:hover {
+  border-bottom: 2px solid #333;
+}
+.add-color {
+  background: #4b4949;
+  color: #fff;
+  border-radius: 5px;
+}
+.PageAction {
+  margin: 20px 0;
+}
+.PageAction_list {
+  text-align: center;
+}
+.PageAction_list li {
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 0 15px;
+  margin: 0 10px;
+}

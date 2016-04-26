@@ -1,0 +1,22 @@
+.listItem {
+  display: block;
+  width: auto;
+  margin: 20px 10px;
+  padding: 15px 70px;
+  color: #666;
+  background-color: rgba(165, 158, 157, .4)
+}
+.resList {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+.resList_item {
+  width: 200px;
+  line-height: 35px;
+  font-size: 20px;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

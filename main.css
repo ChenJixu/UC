@@ -1,0 +1,23 @@
+@import './UserCenter/component/style.css';
+@import './UserCenter/Menu/style.css';
+
+body {
+  margin: 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+dl,dd {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+.Menu {
+  display: flex;
+}
+.listheader {
+  display: flex;
+}
