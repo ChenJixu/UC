@@ -75,14 +75,31 @@ var Menu =  React.createClass({
     }
     this.setState(newState.FitArticle);
   },
+  //翻页
+  onHandlePageClick: function(action) {
+    var newState = Object.assign({},this.state);
+    var totalResult = newState.UserInfo.data.length; //数据总条数
+    var epage = 10; //每页条数
+    var totalPage = parseInt(totalResult/epage) + 1; // 总页数
+    if (action === 'down') {
+      console.log(totalPage)
+    } else {
+      console.log(1);
+    }
+    this.setState(newState);
+  },
+  // 删除
+  onHandleDel: function (index) {
+    console.log(1);
+  },
   render: function () {
     const Child = this.props.children;
     const ChildName = Child.type.displayName || Child.type.name;
     var eara;
-    eara={onHandleClick: this.onHandleClick};
+    eara={onHandleClick: this.onHandleClick, onHandleDel: this.onHandleDel};
     return (
       <div className="Main">
-        <p className="MainTitle">力美健身后台管理</p>
+          <p className="MainTitle">力美健身后台管理<span className="LoginOut">退出</span></p>
         <div className="MainContent">
           <Home />
           {
@@ -95,7 +112,7 @@ var Menu =  React.createClass({
            )
           }
         </div>
-        <PageAction />
+        <PageAction onHandlePageClick={this.onHandlePageClick}/>
       </div>
     )
   }

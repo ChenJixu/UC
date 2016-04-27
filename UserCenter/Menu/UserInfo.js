@@ -4,11 +4,15 @@ import ListHeader from '../component/ListHeader.js';
 
 var UserInfo = React.createClass({
   render: function () {
+    console.log(this.props);
     var content = this.props.data.map(function (data, index) {
-      return (<List
-        {...data}
-        key={index}
-      />)
+      return (
+        <List
+          {...data}
+          key={index}
+          index={index}
+        />
+      )
     });
     return(
       <div className="FitArticle">
