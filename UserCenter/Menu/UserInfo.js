@@ -2,19 +2,18 @@ import React from 'react';
 import List from '../component/List.js';
 import ListHeader from '../component/ListHeader.js';
 
-var UserInfo = React.createClass({
+let UserInfo = React.createClass({
   render: function () {
     console.log(this.props);
-    var content = this.props.data.map(function (data, index) {
-      return (
+    let content = this.props.data.map( (data, index) => (
         <List
           {...data}
           key={index}
           index={index}
+          onHandleDel={this.props.onHandleDel}
         />
-      )
-    });
-    return(
+    ));
+    return (
       <div className="FitArticle">
         <p className="Header">
           <span className="HeaderItem">用户信息列表</span>

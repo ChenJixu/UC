@@ -62,8 +62,14 @@ var Menu =  React.createClass({
     this.setState(newState);
   },
   // 删除
-  onHandleDel: function (index) {
-    console.log(1);
+  onHandleDel: function (id) {
+    fetch('/api/videoDel.php',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(id)
+    })
   },
   fetchUserInfo: function () {
     let  newState = Object.assign({},this.state.UserInfo);
@@ -108,7 +114,7 @@ var Menu =  React.createClass({
             this.state[ChildName],
             {
               onHandleClick: this.onHandleClick,
-              onHandleDel: this.onHandleDel
+              onHandleDel: this.onHandleDel,
             },
             extra
             )
