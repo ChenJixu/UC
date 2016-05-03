@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function TypeHeader(props) {
-  console.log(props)
   var handleClick = function (e) {
     var type = e.currentTarget.getAttribute('type');
     props.onHandleClick(type);
@@ -10,6 +9,6 @@ export default function TypeHeader(props) {
     <span
       className="HeaderItem"
       onClick={handleClick}
-    >{props.type}</span>
+    >{props.text}</span>
   )
 }

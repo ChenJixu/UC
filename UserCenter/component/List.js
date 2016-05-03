@@ -2,11 +2,11 @@ import React from 'react';
 
 export default function List(props) {
   var handelDel = function () {
-    // console.log(props)
+    console.log(props)
   };
   return (
     <dl className="resList">
-      <dd className="resList_item" title={props.auter}>{props.auter}</dd>
+      <dd className="resList_item" title={props.auter}>{props.username}</dd>
       <dd className="resList_item">{props.title}</dd>
       <dd className="resList_item">{props.type}</dd>
       <dd className="resList_item">{props.content}</dd>

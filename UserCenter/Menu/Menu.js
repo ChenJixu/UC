@@ -5,43 +5,23 @@ var Menu =  React.createClass({
   getInitialState: function () {
     return {
       UserInfo: {
-        data: [
-        {auter: 'm111e', title: '111', type: '动作', time: '2016', content: 'test'},
-        {auter: 'me111', title: '111', type: '养剂', time: '2016', content: 'test'},
-        {auter: 'm11e', title: '111', type: '动作', time: '2016', content: 'test'},
-        {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test'},
-        {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test'},
-        {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test'},
-        {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test'},
-        {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test'},
-        {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test'},
-        {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test'},
-        {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test'},
-        {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test'},
-      ]
+        data: []
     },
       FitArticle: {
           data: [
-          {auter: 'me', title: '111', type: '动作', time: '2016', content: 'test', text: '11111'},
-          {auter: 'me', title: '111', type: '养剂', time: '2016', content: 'test', text: '11111'},
-          {auter: 'me', title: '111', type: '动作', time: '2016', content: 'test', text: '11111'},
-          {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test', text: '11111'}
+          {auter: 'me', title: '111', type: '动作', time: '2016', content: 'test', text: '11111'}
         ]
       },
       Video: {
           data: [
           {auter: 'me1', title: '111', type: '动作', time: '2016', content: 'test', text: '11111'},
-          {auter: 'me2', title: '111', type: '养剂', time: '2016', content: 'test', text: '11111'},
-          {auter: 'm3e', title: '111', type: '动作', time: '2016', content: 'test', text: '11111'},
-          {auter: 'm4e', title: '111', type: '计划', time: '2016', content: 'test', text: '11111'}
+          {auter: 'me2', title: '111', type: '养剂', time: '2016', content: 'test', text: '11111'}
         ]
       },
       Message: {
           data: [
           {auter: 'me', title: '111', type: '动作', time: '2016', content: 'test', text: '11111'},
-          {auter: 'me', title: '111', type: '养剂', time: '2016', content: 'test', text: '11111'},
-          {auter: 'me', title: '111', type: '动作', time: '2016', content: 'test', text: '11111'},
-          {auter: 'me', title: '111', type: '计划', time: '2016', content: 'test', text: '11111'}
+          {auter: 'me', title: '111', type: '养剂', time: '2016', content: 'test', text: '11111'}
         ]
       },
     } 
@@ -52,22 +32,15 @@ var Menu =  React.createClass({
       newState;
     } else if (type === '1'){
       newState.FitArticle.data=[
-        {auter: 'me1',title: '111', type: '动作', time: '2016',content: 'test',text: '11111'},
-        {auter: 'me1',title: '111', type: '动作', time: '2016',content: 'test',text: '11111'},
-        {auter: 'me1',title: '111', type: '动作', time: '2016',content: 'test',text: '11111'},
-        {auter: 'me1',title: '111', type: '动作', time: '2016',content: 'test',text: '11111'},
         {auter: 'me1',title: '111', type: '动作', time: '2016',content: 'test',text: '11111'}
         ];
     } else if (type === '2'){
       newState.FitArticle.data = [
         {auter: 'me2',title: '111', type: '计划', time: '2016',content: 'test',text: '11111'},
-        {auter: 'me2',title: '111', type: '计划', time: '2016',content: 'test',text: '11111'},
-        {auter: 'me2',title: '111', type: '计划', time: '2016',content: 'test',text: '11111'},
         {auter: 'me2',title: '111', type: '计划', time: '2016',content: 'test',text: '11111'}
         ];
     } else{
       newState.FitArticle.data = [
-        {auter: 'me2',title: '111', type: '营养', time: '2016',content: 'test',text: '11111'},
         {auter: 'me2',title: '111', type: '营养', time: '2016',content: 'test',text: '11111'},
         {auter: 'me2',title: '111', type: '营养', time: '2016',content: 'test',text: '11111'},
         {auter: 'me2',title: '111', type: '营养', time: '2016',content: 'test',text: '11111'}
@@ -92,22 +65,52 @@ var Menu =  React.createClass({
   onHandleDel: function (index) {
     console.log(1);
   },
+  fetchUserInfo: function () {
+    let  newState = Object.assign({},this.state.UserInfo);
+    fetch('/api/list.php')
+    .then((res) => res.json())
+    .then((res) => {
+      newState.data = res.result;
+    });
+    this.setState({UserInfo: newState});
+  },
   render: function () {
     const Child = this.props.children;
     const ChildName = Child.type.displayName || Child.type.name;
-    var eara;
-    eara={onHandleClick: this.onHandleClick, onHandleDel: this.onHandleDel};
+
+    let extra;
+    switch (ChildName) {
+      case 'UserInfo':
+        extra = { fetchUserInfo: this.fetchUserInfo };
+        break;
+      case 'FitArticle':
+        extra = {};
+        break;
+      case 'Video':
+        extra = {};
+        break;
+      case 'Message':
+        extra = {};
+        break;
+      default:
+        extra = {};
+    }
+
     return (
       <div className="Main">
           <p className="MainTitle">力美健身后台管理<span className="LoginOut">退出</span></p>
         <div className="MainContent">
-          <Home />
+          <Home fetchUserInfo={this.fetchUserInfo}/>
           {
             React.cloneElement(
             Child, 
             Object.assign({},
             this.state[ChildName],
-            eara
+            {
+              onHandleClick: this.onHandleClick,
+              onHandleDel: this.onHandleDel
+            },
+            extra
             )
            )
           }

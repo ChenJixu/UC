@@ -2,18 +2,18 @@ var path = require('path');
 var webpack = require('webpack');
 module.exports = {
   entry: {
-    'uc': ['webpack-dev-server/client?http://localhost:7777', 'webpack/hot/dev-server', './index.js']
+    'uc': './index.js'
   },
   output: {
-    // path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'uc.js'
   },
-  devtool: 'cheap-source-map',
+  // devtool: 'cheap-source-map',
   // 本地服务器配置 
-  devServer: {
-    hot: true,
-    port: 7777
-  },
+  // devServer: {
+  //   hot: true,
+  //   port: 7777
+  // },
   module: {
     loaders: [
       {

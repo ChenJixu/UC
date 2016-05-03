@@ -8,7 +8,9 @@ var FitArticle = React.createClass({
     this.props.onHandleClick(type);
     },
   render: function () {
+    console.log(this.props.data);
     var content = this.props.data.map(function (data, index) {
+      console.log(data);
       return (<List
         {...data}
         key={index}
@@ -20,7 +22,7 @@ var FitArticle = React.createClass({
           <span className="HeaderItem" onClick={this.handleClick} type="0">全部</span>
           <span className="HeaderItem" onClick={this.handleClick} type="1">动作训练</span>
           <span className="HeaderItem" onClick={this.handleClick} type="2">健身计划</span>
-          <span className="HeaderItem" onClick={this.handleClick} type="3">营养不剂</span>
+          <span className="HeaderItem" onClick={this.handleClick} type="3">营养补剂</span>
         </p>
         <div className="list">
           <dl className="listheader">
