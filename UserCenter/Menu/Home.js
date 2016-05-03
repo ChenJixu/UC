@@ -3,9 +3,6 @@ import { Link } from 'react-router';
 import Ulink from '../component/Ulink.js';
 
 var Home =  React.createClass({
-  componentWillMount: function () {
-    this.props.fetchUserInfo();
-  },
   render: function () {
     return (
         <section className="MainMenu">

@@ -23,7 +23,8 @@ app.use(webpackHotMiddleware(compiler));
 
 const proxy = require('proxy-middleware');
 const url = require('url');
-app.use('/', proxy(url.parse('http://localhost:9999/mysqlTest')));
+// app.use('/', proxy(url.parse('http://localhost:9999/mysqlTest')));
+app.use('/', proxy(url.parse('http://localhost:80/FitnessWeb')));
 
 app.listen(app.get('port'), (err) => {
   if (err) {

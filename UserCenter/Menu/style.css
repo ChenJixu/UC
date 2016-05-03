@@ -37,8 +37,9 @@
 }
 .listheader_item {
   display: inline-block;
-  width: 200px;
+  padding: 0 60px;
   text-align: center;
+  flex-shrink: 0;
 }
 .Header {
   margin: 0;

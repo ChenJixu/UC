@@ -1,5 +1,6 @@
 import React from 'react';
 import Home from './Home.js';
+import { Link } from 'react-router';
 import PageAction from './PageAction.js';
 var Menu =  React.createClass({
   getInitialState: function () {
@@ -8,15 +9,10 @@ var Menu =  React.createClass({
         data: []
     },
       FitArticle: {
-          data: [
-          {auter: 'me', title: '111', type: '动作', time: '2016', content: 'test', text: '11111'}
-        ]
+          data: []
       },
       Video: {
-          data: [
-          {auter: 'me1', title: '111', type: '动作', time: '2016', content: 'test', text: '11111'},
-          {auter: 'me2', title: '111', type: '养剂', time: '2016', content: 'test', text: '11111'}
-        ]
+          data: []
       },
       Message: {
           data: [
@@ -73,12 +69,58 @@ var Menu =  React.createClass({
   },
   fetchUserInfo: function () {
     let  newState = Object.assign({},this.state.UserInfo);
-    fetch('/api/list.php')
+    fetch('/api/userList.php',{
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        pageIndex: 0,
+        pageSize: 10
+      })
+    })
     .then((res) => res.json())
     .then((res) => {
       newState.data = res.result;
     });
     this.setState({UserInfo: newState});
+  },
+  fetchFitArticle: function() {
+    let  newState = Object.assign({},this.state.FitArticle);
+    fetch('/api/articleList.php',{
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        pageIndex: 0,
+        pageSize: 10
+      })
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      newState.data = res.result;
+    });
+    this.setState({FitArticle: newState});
+  },
+  
+  fetchVideo: function() {
+    let  newState = Object.assign({},this.state.Video);
+    fetch('/api/videoList.php',{
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        pageIndex: 0,
+        pageSize: 10
+      })
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      newState.data = res.result;
+    });
+    this.setState({Video: newState});
   },
   render: function () {
     const Child = this.props.children;
@@ -90,10 +132,10 @@ var Menu =  React.createClass({
         extra = { fetchUserInfo: this.fetchUserInfo };
         break;
       case 'FitArticle':
-        extra = {};
+        extra = { fetchFitArticle: this.fetchFitArticle};
         break;
       case 'Video':
-        extra = {};
+        extra = {fetchVideo: this.fetchVideo};
         break;
       case 'Message':
         extra = {};
@@ -104,9 +146,11 @@ var Menu =  React.createClass({
 
     return (
       <div className="Main">
-          <p className="MainTitle">力美健身后台管理<span className="LoginOut">退出</span></p>
+          <p className="MainTitle">力美健身后台管理
+            <a href="http://localhost/fitnessweb/sysHome/sysLogin.php"><span className="LoginOut">退出</span></a>
+          </p>
         <div className="MainContent">
-          <Home fetchUserInfo={this.fetchUserInfo}/>
+          <Home/>
           {
             React.cloneElement(
             Child, 

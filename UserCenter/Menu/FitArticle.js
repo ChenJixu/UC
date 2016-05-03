@@ -3,16 +3,23 @@ import List from '../component/List.js';
 import ListHeader from '../component/ListHeader.js';
 
 var FitArticle = React.createClass({
+  componentDidMount: function () {
+    this.props.fetchFitArticle();
+    console.log(this.props)
+  },
   handleClick: function (e) {
     var type = e.currentTarget.getAttribute('type');
     this.props.onHandleClick(type);
     },
   render: function () {
-    console.log(this.props.data);
     var content = this.props.data.map(function (data, index) {
-      console.log(data);
       return (<List
         {...data}
+        name={data.mb_usename}
+        item1={data.mb_title}
+        item2={data.mb_type}
+        item3={data.mb_main}
+        item4={data.mb_date}
         key={index}
       />)
     });

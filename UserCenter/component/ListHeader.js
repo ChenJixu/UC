@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function ListHeader(props) {
-  console.log(props)
   return (
     <dl className="listHeader" style={{display: 'flex'}}>
       <dd>{props.header.auto}</dd>
