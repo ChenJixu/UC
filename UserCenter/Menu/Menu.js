@@ -2,6 +2,7 @@ import React from 'react';
 import Home from './Home.js';
 import { Link } from 'react-router';
 import PageAction from './PageAction.js';
+import fetchList from '../func/fetchList.js';
 var Menu =  React.createClass({
   getInitialState: function () {
     return {
@@ -14,35 +15,18 @@ var Menu =  React.createClass({
       Video: {
           data: []
       },
-      Message: {
-          data: [
-          {auter: 'me', title: '111', type: '动作', time: '2016', content: 'test', text: '11111'},
-          {auter: 'me', title: '111', type: '养剂', time: '2016', content: 'test', text: '11111'}
-        ]
+      Post: {
+          data: []
       },
     } 
   },
-  onHandleClick: function (type) {
-    var newState = Object.assign({}, this.state);
-    if (type === '0')　{
-      newState;
-    } else if (type === '1'){
-      newState.FitArticle.data=[
-        {auter: 'me1',title: '111', type: '动作', time: '2016',content: 'test',text: '11111'}
-        ];
-    } else if (type === '2'){
-      newState.FitArticle.data = [
-        {auter: 'me2',title: '111', type: '计划', time: '2016',content: 'test',text: '11111'},
-        {auter: 'me2',title: '111', type: '计划', time: '2016',content: 'test',text: '11111'}
-        ];
-    } else{
-      newState.FitArticle.data = [
-        {auter: 'me2',title: '111', type: '营养', time: '2016',content: 'test',text: '11111'},
-        {auter: 'me2',title: '111', type: '营养', time: '2016',content: 'test',text: '11111'},
-        {auter: 'me2',title: '111', type: '营养', time: '2016',content: 'test',text: '11111'}
-      ]
-    }
-    this.setState(newState.FitArticle);
+  onHandleClick: function (index) {
+    const api = '/api/articleList.php';
+    fetchList.bind(this)({
+      api,
+      index,
+      list: 'FitArticle'
+    })
   },
   //翻页
   onHandlePageClick: function(action) {
@@ -58,69 +42,67 @@ var Menu =  React.createClass({
     this.setState(newState);
   },
   // 删除
-  onHandleDel: function (id) {
-    fetch('/api/videoDel.php',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(id)
+  onHandleDel: function (id,type,index) {
+    if(confirm("确定要删除这条数据吗？")) {
+        fetch('/api/delete.php',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+        body: JSON.stringify({id,type})
     })
+    .then((res) => res.json())
+    .then((res) => {
+      if(res.result == 'success') {
+        alert("删除成功！");
+        let api;
+        let list;
+        if (type == "article") {
+          api = '/api/articleList.php';
+          list = 'FitArticle';
+      } else if (type == "user") {
+          api = '/api/userList.php';
+          list = 'UserInfo';
+      } else if (type == "post") {
+          api = '/api/postList.php';
+          list = 'Post';
+      } else if (type == "video") {
+          api = '/api/videoList.php';
+          list = 'Video';
+      }
+      fetchList.bind(this)({api,list})
+      }
+    })
+   }
   },
   fetchUserInfo: function () {
-    let  newState = Object.assign({},this.state.UserInfo);
-    fetch('/api/userList.php',{
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        pageIndex: 0,
-        pageSize: 10
-      })
+    const api = '/api/userList.php';
+    fetchList.bind(this)({
+      api,
+      list: 'UserInfo'
     })
-    .then((res) => res.json())
-    .then((res) => {
-      newState.data = res.result;
-    });
-    this.setState({UserInfo: newState});
   },
   fetchFitArticle: function() {
-    let  newState = Object.assign({},this.state.FitArticle);
-    fetch('/api/articleList.php',{
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        pageIndex: 0,
-        pageSize: 10
-      })
+    const api = '/api/articleList.php';
+    fetchList.bind(this)({
+      api,
+      list: 'FitArticle'
     })
-    .then((res) => res.json())
-    .then((res) => {
-      newState.data = res.result;
-    });
-    this.setState({FitArticle: newState});
   },
   
   fetchVideo: function() {
-    let  newState = Object.assign({},this.state.Video);
-    fetch('/api/videoList.php',{
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        pageIndex: 0,
-        pageSize: 10
-      })
+    const api = '/api/videoList.php';
+    fetchList.bind(this)({
+      api,
+      list: 'Video'
     })
-    .then((res) => res.json())
-    .then((res) => {
-      newState.data = res.result;
-    });
-    this.setState({Video: newState});
+  },
+  fetchPost: function() {
+    const api = '/api/postList.php';
+    fetchList.bind(this)({
+      api,
+      list: 'Post'
+    })
   },
   render: function () {
     const Child = this.props.children;
@@ -137,14 +119,15 @@ var Menu =  React.createClass({
       case 'Video':
         extra = {fetchVideo: this.fetchVideo};
         break;
-      case 'Message':
-        extra = {};
+      case 'Post':
+        extra = {fetchPost: this.fetchPost};
         break;
       default:
         extra = {};
     }
 
     return (
+      console.log(this.state),
       <div className="Main">
           <p className="MainTitle">力美健身后台管理
             <a href="http://localhost/fitnessweb/sysHome/sysLogin.php"><span className="LoginOut">退出</span></a>

@@ -1,6 +1,7 @@
 import React from 'react';
 import List from '../component/List.js';
 import ListHeader from '../component/ListHeader.js';
+import TittleBar from '../component/TittleBar.js';
 
 let UserInfo = React.createClass({
   componentDidMount: function () {
@@ -17,8 +18,20 @@ let UserInfo = React.createClass({
           item2={data.mb_petname}
           item3={data.mb_email}
           item4={data.mb_reg_time}
+          type="user"
           onHandleDel={this.props.onHandleDel}
         />
+    ));
+    const titleArr = [
+      {text:'用户名'},
+      {text:'性别'},
+      {text:'昵称'},
+      {text:'邮箱'},
+      {text:'注册时间'},
+      {text:'操作'},
+    ];
+    let titleContent = titleArr.map((data,index) => (
+      <TittleBar {...data} key={index} />
     ));
     return (
       <div className="FitArticle">
@@ -27,12 +40,7 @@ let UserInfo = React.createClass({
         </p>
         <div className="list">
           <dl className="listheader">
-            <dt className="listheader_item">用户名</dt>
-            <dt className="listheader_item">性别</dt>
-            <dt className="listheader_item">昵称</dt>
-            <dt className="listheader_item">邮箱</dt>
-            <dt className="listheader_item">注册时间</dt>
-            <dt className="listheader_item">操作</dt>
+            {titleContent}
           </dl>
           <div>
             {content}
