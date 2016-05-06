@@ -1,8 +1,8 @@
 import React from 'react';
 import List from '../component/List.js';
-import ListHeader from '../component/ListHeader.js';
-import TittleBar from '../component/TittleBar.js';
 import HeadBar from '../component/HeadBar.js';
+import TittleBar from '../component/TittleBar.js';
+import PageAction from './PageAction.js';
 
 var FitArticle = React.createClass({
   componentDidMount: function () {
@@ -13,8 +13,8 @@ var FitArticle = React.createClass({
       <List
         {...data}
         name={data.mb_usename}
-        item1={data.mb_title}
-        item2={data.mb_type}
+        item1={data.mb_type}
+        item2={data.mb_title}
         item3={data.mb_main}
         item4={data.mb_date}
         key={index}
@@ -28,14 +28,6 @@ var FitArticle = React.createClass({
       {text: '资讯类'},
       {text: '知识类'}
     ];
-    const tittleArr = [
-      {text: '发布者'},
-      {text: '文章标题'},
-      {text: '文章类型'},
-      {text: '内容摘要'},
-      {text: '发表时间'},
-      {text: '操作'}
-    ];
     let HeadContent = headArr.map((data, index) => (
       <HeadBar
       {...data}
@@ -44,9 +36,6 @@ var FitArticle = React.createClass({
       index={index}
       />
       ));
-    let TittleContent = tittleArr.map((data, index) => (
-      <TittleBar {...data} key={index} />
-      ));
     return(
       <div className="FitArticle">
         <p className="Header">
@@ -54,12 +43,22 @@ var FitArticle = React.createClass({
         </p>
         <div className="list">
           <dl className="listheader">
-            {TittleContent}
+            <dt className="listheader_item" style={{width: '10%'}}>发布者</dt>
+            <dt className="listheader_item" style={{width: '15%'}}>文章类型</dt>
+            <dt className="listheader_item" style={{width: '20%'}}>文章标题</dt>
+            <dt className="listheader_item" style={{width: '25%'}}>内容摘要</dt>
+            <dt className="listheader_item" style={{width: '20%'}}>发表时间</dt>
+            <dt className="listheader_item" style={{width: '10%'}}>操作</dt>
           </dl>
           <div>
             {content}
           </div>
         </div>
+        <PageAction
+          onHandlePageClick={this.props.onHandlePageClick}
+          list="FitArticle"
+          api="/api/articleList.php"
+        />
       </div>
     );
   }

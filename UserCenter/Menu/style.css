@@ -36,10 +36,8 @@
   margin-bottom: 20px;
 }
 .listheader_item {
-  display: inline-block;
-  padding: 0 60px;
+  padding: 0 15px;
   text-align: center;
-  flex-shrink: 0;
 }
 .Header {
   margin: 0;
@@ -47,7 +45,7 @@
   border-bottom: 1px solid #ccc;
 }
 .FitArticle {
-  flex-grow: 1;
+  width: 80%;
   margin-left: 20px;
 }
 .HeaderItem {

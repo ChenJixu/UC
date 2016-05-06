@@ -1,22 +1,29 @@
 import React from 'react';
 import Home from './Home.js';
 import { Link } from 'react-router';
-import PageAction from './PageAction.js';
 import fetchList from '../func/fetchList.js';
+let prams = {
+      pageIndex: 0,
+      pageSize: 10,
+    }
 var Menu =  React.createClass({
   getInitialState: function () {
     return {
       UserInfo: {
-        data: []
+        data: [],
+        total: 0
     },
       FitArticle: {
-          data: []
+          data: [],
+          total: 0
       },
       Video: {
-          data: []
+          data: [],
+          total: 0
       },
       Post: {
-          data: []
+          data: [],
+          total: 0
       },
     } 
   },
@@ -29,17 +36,33 @@ var Menu =  React.createClass({
     })
   },
   //翻页
-  onHandlePageClick: function(action) {
-    var newState = Object.assign({},this.state);
-    var totalResult = newState.UserInfo.data.length; //数据总条数
-    var epage = 10; //每页条数
-    var totalPage = parseInt(totalResult/epage) + 1; // 总页数
-    if (action === 'down') {
-      console.log(totalPage)
-    } else {
-      console.log(1);
+  onHandlePageClick: function(api,list,action) {
+    let newState = Object.assign({},this.state[list]);
+    console.log(newState.total)
+    if (action === 'next') {
+      if (prams.pageIndex >= (newState.total -10)) return;
+      prams.pageIndex = prams.pageIndex + 10;
+      console.log(prams.pageIndex);
+    } else if(action === 'up'){
+      if (prams.pageIndex === 0) return;
+      prams.pageIndex = prams.pageIndex - 10;
+      if(prams.pageIndex == 1) {
+        prams.pageIndex = 0;
+      }
+      console.log(prams.pageIndex);
     }
-    this.setState(newState);
+    fetch(api, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(prams)
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      newState.data = res.result;
+      this.setState({[list]: newState});
+    });
   },
   // 删除
   onHandleDel: function (id,type,index) {
@@ -89,7 +112,6 @@ var Menu =  React.createClass({
       list: 'FitArticle'
     })
   },
-  
   fetchVideo: function() {
     const api = '/api/videoList.php';
     fetchList.bind(this)({
@@ -127,7 +149,6 @@ var Menu =  React.createClass({
     }
 
     return (
-      console.log(this.state),
       <div className="Main">
           <p className="MainTitle">力美健身后台管理
             <a href="http://localhost/fitnessweb/sysHome/sysLogin.php"><span className="LoginOut">退出</span></a>
@@ -142,13 +163,13 @@ var Menu =  React.createClass({
             {
               onHandleClick: this.onHandleClick,
               onHandleDel: this.onHandleDel,
+              onHandlePageClick: this.onHandlePageClick
             },
             extra
             )
            )
           }
         </div>
-        <PageAction onHandlePageClick={this.onHandlePageClick}/>
       </div>
     )
   }
